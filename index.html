@@ -1,0 +1,1420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SmarterQueue — Plans & Pricing</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --font-main: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      /* --font-main: 'proxima-nova', system-ui, -apple-system, sans-serif; */
+
+      --accent: #4075BF;
+      --accent-hover: #3465AB;
+      --accent-10: rgba(64,117,191,.10);
+      --accent-06: rgba(64,117,191,.06);
+      --accent-15: rgba(64,117,191,.15);
+      --accent-25: rgba(64,117,191,.25);
+
+      --ink: #072653;
+      --ink-80: #1e3d66;
+      --ink-60: #3a5a80;
+      --ink-40: #6b849e;
+      --ink-25: #97abbe;
+      --ink-12: #c8d3df;
+      --ink-06: #e8edf3;
+      --ink-03: #f4f6f9;
+
+      --bg: #f7f9fc;
+      --bg-card: #ffffff;
+
+      --green: #1a9d5c;
+      --green-10: rgba(26,157,92,.10);
+      --green-bg: rgba(26,157,92,.06);
+      --amber: #d97706;
+      --amber-bg: #fef9ee;
+      --amber-border: #fde68a;
+
+      --shadow-card: 0 1px 3px rgba(7,38,83,.04), 0 1px 2px rgba(7,38,83,.03);
+      --shadow-card-hover: 0 8px 24px rgba(7,38,83,.07), 0 2px 6px rgba(7,38,83,.04);
+      --shadow-recommended: 0 20px 50px rgba(64,117,191,.15), 0 8px 20px rgba(7,38,83,.06);
+      --shadow-btn-hover: 0 4px 12px rgba(64,117,191,.25);
+      --shadow-slider-thumb: 0 2px 8px rgba(64,117,191,.3), 0 0 0 4px rgba(64,117,191,.1);
+
+      --radius: 16px;
+      --radius-sm: 10px;
+      --radius-xs: 7px;
+      --ease: cubic-bezier(.4,0,.2,1);
+      --bounce: cubic-bezier(.34,1.56,.64,1);
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: var(--font-main);
+      background: var(--bg);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    /* Ambient blobs */
+    body::before {
+      content: '';
+      position: fixed;
+      top: -40%; left: -20%;
+      width: 80%; height: 80%;
+      background: radial-gradient(ellipse, rgba(64,117,191,.04) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .pricing-page { position: relative; z-index: 1; }
+
+    /* ══════════════════════════════════════
+       HEADER — ultra-compact
+       ══════════════════════════════════════ */
+    .pricing-header {
+      text-align: center;
+      padding: 44px 24px 0;
+    }
+    .pricing-header h1 {
+      font-size: 34px;
+      font-weight: 800;
+      letter-spacing: -.035em;
+      color: var(--ink);
+      line-height: 1.15;
+      margin-bottom: 6px;
+    }
+    .pricing-header h1 span {
+      background: linear-gradient(135deg, var(--accent), #5b93d4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .pricing-header .subtitle {
+      font-size: 15px;
+      color: var(--ink-40);
+      margin-bottom: 0;
+      font-weight: 450;
+    }
+
+    /* ── Unified control strip ── */
+    .control-strip {
+      max-width: 820px;
+      margin: 32px auto 36px;
+      padding: 0 24px;
+    }
+    .control-bar {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--ink-06);
+      border-radius: 100px;
+      padding: 10px 12px 10px 28px;
+      box-shadow: 0 2px 12px rgba(7,38,83,.05), 0 0 0 1px rgba(7,38,83,.02);
+    }
+
+    /* Slider inline */
+    .inline-slider-group {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex: 1;
+      min-width: 0;
+    }
+    .slider-label-text {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink-40);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .slider-track-inline {
+      flex: 1;
+      min-width: 140px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+    }
+    .slider-value-inline {
+      display: flex;
+      align-items: baseline;
+      gap: 3px;
+      flex-shrink: 0;
+      min-width: 36px;
+      justify-content: flex-end;
+    }
+    .slider-value {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: -.02em;
+      line-height: 1;
+      transition: transform .12s var(--bounce);
+    }
+    .slider-value.bump { transform: scale(1.1); }
+    .slider-value-unit {
+      font-size: 10.5px;
+      font-weight: 600;
+      color: var(--ink-25);
+    }
+
+    /* Divider */
+    .control-divider {
+      width: 1px;
+      height: 28px;
+      background: var(--ink-06);
+      flex-shrink: 0;
+    }
+
+    /* Billing toggle */
+    .billing-toggle {
+      display: inline-flex;
+      background: var(--ink-03);
+      border: 1px solid var(--ink-06);
+      border-radius: 100px;
+      padding: 2px;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .billing-option {
+      position: relative; z-index: 1;
+      padding: 7px 16px;
+      border-radius: 100px;
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      color: var(--ink-40);
+      transition: color .25s var(--ease);
+      font-family: var(--font-main);
+      white-space: nowrap;
+    }
+    .billing-option.active { color: #fff; }
+    .billing-slider {
+      position: absolute;
+      top: 2px; left: 2px;
+      height: calc(100% - 4px);
+      border-radius: 100px;
+      background: var(--accent);
+      box-shadow: 0 2px 6px var(--accent-25);
+      transition: transform .35s var(--ease), width .35s var(--ease);
+      z-index: 0;
+    }
+    /* Save badge — white on blue, readable */
+    .billing-save {
+      font-size: 10px;
+      font-weight: 700;
+      color: rgba(255,255,255,.85);
+      background: rgba(255,255,255,.2);
+      padding: 1px 6px;
+      border-radius: 100px;
+      margin-left: 3px;
+    }
+    /* When annual is NOT active, show save badge differently */
+    .billing-option:not(.active) .billing-save {
+      color: var(--accent);
+      background: var(--accent-10);
+    }
+
+    /* Currency */
+    .currency-row {
+      display: flex;
+      gap: 1px;
+      background: var(--ink-03);
+      border: 1px solid var(--ink-06);
+      border-radius: 100px;
+      padding: 2px;
+      flex-shrink: 0;
+    }
+    .currency-btn {
+      padding: 7px 12px;
+      border-radius: 100px;
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      color: var(--ink-40);
+      transition: all .2s var(--ease);
+      font-family: var(--font-main);
+    }
+    .currency-btn.active {
+      color: var(--accent);
+      background: var(--bg-card);
+      box-shadow: var(--shadow-card);
+    }
+    .currency-btn:hover:not(.active) { color: var(--ink-60); }
+
+    /* Slider ticks — below control bar */
+    .slider-ticks-row {
+      max-width: 920px;
+      margin: 0 auto 16px;
+      padding: 0 24px;
+    }
+    .slider-ticks {
+      display: flex;
+      justify-content: space-between;
+      /* Align with the slider track inside the control bar */
+      padding: 0;
+      margin: 2px 0 0;
+    }
+    .slider-ticks span {
+      font-size: 9.5px;
+      font-weight: 600;
+      color: var(--ink-12);
+      min-width: 18px;
+      text-align: center;
+      transition: color .2s;
+    }
+    .slider-ticks span.tick-active { color: var(--accent); font-weight: 700; }
+
+    /* Range input */
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 5px;
+      border-radius: 3px;
+      background: var(--ink-06);
+      outline: none;
+      cursor: pointer;
+    }
+    input[type="range"]::-webkit-slider-runnable-track {
+      height: 5px;
+      border-radius: 3px;
+      background: linear-gradient(to right,
+        var(--accent) 0%, var(--accent) var(--fill, 0%),
+        var(--ink-06) var(--fill, 0%), var(--ink-06) 100%);
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: #fff;
+      border: 2.5px solid var(--accent);
+      box-shadow: var(--shadow-slider-thumb);
+      cursor: grab;
+      transition: transform .2s var(--bounce), box-shadow .2s;
+      margin-top: -7.5px;
+    }
+    input[type="range"]::-webkit-slider-thumb:hover {
+      transform: scale(1.15);
+      box-shadow: 0 2px 8px rgba(64,117,191,.3), 0 0 0 5px rgba(64,117,191,.1);
+    }
+    input[type="range"]::-webkit-slider-thumb:active { transform: scale(1.08); cursor: grabbing; }
+    input[type="range"]::-moz-range-track {
+      height: 5px; border-radius: 3px; background: var(--ink-06); border: none;
+    }
+    input[type="range"]::-moz-range-progress {
+      height: 5px; border-radius: 3px; background: var(--accent);
+    }
+    input[type="range"]::-moz-range-thumb {
+      width: 20px; height: 20px; border-radius: 50%;
+      background: #fff; border: 2.5px solid var(--accent);
+      box-shadow: var(--shadow-slider-thumb); cursor: grab;
+    }
+
+    /* ══════════════════════════════════════
+       PLANS GRID
+       ══════════════════════════════════════ */
+    .plans-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+    .plans-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      align-items: start;
+    }
+
+    /* ══════════════════════════════════════
+       PLAN CARD
+       ══════════════════════════════════════ */
+    .plan-card {
+      background: var(--bg-card);
+      border: 1px solid var(--ink-06);
+      border-radius: var(--radius);
+      padding: 28px 24px 26px;
+      position: relative;
+      box-shadow: var(--shadow-card);
+      transition: border-color .4s var(--ease), box-shadow .4s var(--ease), transform .4s var(--ease), opacity .4s var(--ease);
+      opacity: 0;
+      transform: translateY(12px);
+      animation: cardIn .5s var(--ease) forwards;
+    }
+    .plan-card:nth-child(1) { animation-delay: .05s; }
+    .plan-card:nth-child(2) { animation-delay: .12s; }
+    .plan-card:nth-child(3) { animation-delay: .19s; }
+    @keyframes cardIn { to { opacity: 1; transform: translateY(0); } }
+
+    .plan-card:hover {
+      box-shadow: var(--shadow-card-hover);
+      border-color: var(--ink-12);
+    }
+
+    /* Recommended */
+    .plan-card.recommended {
+      border-color: var(--accent);
+      box-shadow: var(--shadow-recommended);
+      transform: translateY(-4px) scale(1.01);
+      z-index: 2;
+    }
+    .plan-card.recommended::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: var(--radius);
+      padding: 1.5px;
+      background: linear-gradient(135deg, var(--accent), #6ba3e0, var(--accent));
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+    .recommended-badge {
+      position: absolute;
+      top: -11px; left: 50%;
+      transform: translateX(-50%);
+      display: none;
+      align-items: center;
+      background: linear-gradient(135deg, var(--accent), #5b93d4);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 16px;
+      border-radius: 100px;
+      letter-spacing: .03em;
+      text-transform: uppercase;
+      box-shadow: 0 4px 12px var(--accent-25);
+      white-space: nowrap;
+    }
+    .plan-card.recommended .recommended-badge { display: inline-flex; }
+
+    /* Too small */
+    .plan-card.too-small { opacity: .4; }
+    .plan-card.too-small .plan-cta {
+      background: var(--ink-06); color: var(--ink-25);
+      border-color: var(--ink-06); cursor: not-allowed; box-shadow: none;
+    }
+    .plan-card.too-small .plan-cta:hover { transform: none; box-shadow: none; }
+
+    /* ── Plan internals ── */
+    .plan-name-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+    .plan-name {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -.02em;
+    }
+    .best-value-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      background: var(--amber-bg);
+      border: 1px solid var(--amber-border);
+      color: var(--amber);
+      font-size: 10.5px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 100px;
+    }
+    .plan-tagline {
+      font-size: 12.5px;
+      color: var(--ink-40);
+      line-height: 1.45;
+      font-weight: 450;
+      margin-bottom: 16px;
+    }
+
+    /* Price */
+    .plan-price {
+      display: flex;
+      align-items: baseline;
+      gap: 2px;
+    }
+    .plan-currency {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--ink-60);
+      align-self: flex-start;
+      margin-top: 4px;
+      margin-right: 1px;
+    }
+    .plan-amount {
+      font-size: 44px;
+      font-weight: 800;
+      letter-spacing: -.04em;
+      line-height: 1;
+      color: var(--ink);
+    }
+    .plan-card.recommended .plan-amount { color: var(--accent); }
+    .plan-period-row {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      margin-top: 2px;
+    }
+    .plan-period {
+      font-size: 13px;
+      color: var(--ink-40);
+      font-weight: 500;
+    }
+    .plan-billed {
+      font-size: 11.5px;
+      color: var(--ink-25);
+    }
+    .plan-price-block { margin-bottom: 18px; }
+
+    /* CTA */
+    .plan-cta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      width: 100%;
+      padding: 11px 0;
+      border: 1.5px solid transparent;
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      font-weight: 700;
+      font-family: var(--font-main);
+      cursor: pointer;
+      transition: all .25s var(--ease);
+      text-align: center;
+      text-decoration: none;
+      margin-bottom: 20px;
+      letter-spacing: -.01em;
+    }
+    .plan-cta svg { transition: transform .2s var(--ease); }
+    .plan-cta:hover svg { transform: translateX(3px); }
+    .plan-cta-primary,
+    .plan-cta-secondary {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+      box-shadow: 0 1px 2px rgba(7,38,83,.08);
+    }
+    .plan-cta-primary:hover,
+    .plan-cta-secondary:hover {
+      background: var(--accent-hover);
+      border-color: var(--accent-hover);
+      box-shadow: var(--shadow-btn-hover);
+      transform: translateY(-1px);
+    }
+    .plan-card.recommended .plan-cta {
+      box-shadow: 0 2px 8px var(--accent-25);
+    }
+
+    /* ── Limits table ── */
+    .plan-limits { list-style: none; }
+    .plan-limit-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 7px 0;
+      border-bottom: 1px solid var(--ink-03);
+      font-size: 13px;
+    }
+    .plan-limit-row:last-child { border-bottom: none; }
+    .limit-label { color: var(--ink-40); font-weight: 500; }
+    .limit-value-static { font-weight: 700; color: var(--ink); }
+    .limit-value-static.feature-locked {
+      color: var(--ink-25); font-weight: 500;
+    }
+    .limit-value-static.feature-advanced {
+      color: var(--green); font-weight: 700;
+    }
+
+    /* Dropdown — disguised */
+    .limit-select {
+      appearance: none; -webkit-appearance: none;
+      border: 1px solid transparent;
+      background: transparent;
+      font-family: var(--font-main);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--ink);
+      padding: 4px 18px 4px 8px;
+      border-radius: var(--radius-xs);
+      cursor: pointer;
+      text-align: right;
+      min-width: 64px;
+      transition: all .2s var(--ease);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23c8d3df' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 3px center;
+    }
+    .limit-select:hover {
+      border-color: var(--ink-12);
+      background-color: var(--ink-03);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%234075BF' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    }
+    .limit-select:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-10);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%234075BF' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    }
+
+    /* Customize toggle */
+    .customize-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      width: 100%;
+      padding: 8px 0;
+      margin-top: 4px;
+      border: 1px dashed var(--ink-06);
+      background: transparent;
+      font-family: var(--font-main);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--ink-40);
+      cursor: pointer;
+      border-radius: var(--radius-xs);
+      transition: all .2s var(--ease);
+    }
+    .customize-toggle:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-06);
+    }
+    .customize-toggle svg {
+      transition: transform .25s var(--ease);
+      opacity: .6;
+    }
+    .customize-toggle:hover svg { opacity: 1; }
+    .customize-toggle.open {
+      border-style: solid;
+      border-color: var(--accent-15);
+      color: var(--accent);
+      background: var(--accent-06);
+    }
+    .customize-toggle.open svg { transform: rotate(180deg); opacity: 1; }
+
+    .plan-configurables {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .4s var(--ease), opacity .3s;
+      opacity: 0;
+    }
+    .plan-configurables.visible {
+      max-height: 500px;
+      opacity: 1;
+      margin-top: 6px;
+    }
+    .addon-price {
+      margin-top: 10px;
+      padding: 8px 12px;
+      background: var(--accent-06);
+      border: 1px solid var(--accent-10);
+      border-radius: var(--radius-xs);
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+    }
+    .addon-price-label { color: var(--ink-40); font-weight: 500; }
+    .addon-price-value { font-weight: 800; color: var(--accent); }
+
+    /* ══════════════════════════════════════
+       FEATURES — cumulative (longer = more value)
+       ══════════════════════════════════════ */
+    .plan-divider {
+      height: 1px;
+      background: var(--ink-06);
+      margin: 16px 0 12px;
+      border: none;
+    }
+    .plan-features-label {
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      color: var(--ink-25);
+      margin-bottom: 10px;
+    }
+    .plan-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+    .plan-feature {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 12.5px;
+      color: var(--ink-60);
+      line-height: 1.4;
+      font-weight: 450;
+    }
+    .plan-feature .ci {
+      flex-shrink: 0;
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      background: var(--green-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1px;
+    }
+    .plan-feature .ci svg { width: 9px; height: 9px; }
+
+    /* Inherited features — same green check, just lighter text */
+    .plan-feature.inherited {
+      color: var(--ink-40);
+    }
+
+    /* Locked features */
+    .feature-locked { color: var(--ink-25); }
+    .feature-locked .ci { background: var(--ink-03); }
+    .feature-locked .ci svg path { stroke: var(--ink-12); }
+    .lock-text {
+      font-size: 11px; color: var(--accent);
+      font-weight: 600; cursor: pointer;
+    }
+    .lock-text:hover { text-decoration: underline; }
+
+    /* New-in-tier highlight */
+    .plan-feature.new-in-tier {
+      color: var(--ink-80);
+      font-weight: 550;
+    }
+
+    /* ══════════════════════════════════════
+       MOBILE
+       ══════════════════════════════════════ */
+    @media (max-width: 960px) {
+      .plans-grid {
+        grid-template-columns: 1fr;
+        max-width: 420px;
+        margin: 0 auto;
+        gap: 12px;
+      }
+      .plan-card.recommended { transform: none; order: -1; }
+      .plan-card.recommended:hover { transform: none; }
+      .pricing-header h1 { font-size: 28px; }
+      .pricing-header .subtitle { font-size: 14px; }
+
+      /* Control bar → stacked card layout */
+      .control-strip {
+        margin: 24px auto 28px;
+      }
+      .control-bar {
+        flex-direction: column;
+        border-radius: var(--radius);
+        padding: 0;
+        gap: 0;
+        overflow: hidden;
+      }
+
+      /* Slider section — hero zone on mobile */
+      .inline-slider-group {
+        width: 100%;
+        padding: 20px 22px 16px;
+        gap: 12px;
+        background: linear-gradient(180deg, var(--accent-06) 0%, transparent 100%);
+        border-bottom: 1px solid var(--ink-06);
+      }
+      .slider-label-text {
+        font-size: 13.5px;
+        color: var(--ink-60);
+      }
+      .slider-value {
+        font-size: 26px;
+      }
+
+      /* Toggles row */
+      .mobile-toggles-row {
+        display: contents;
+      }
+      .control-divider { display: none; }
+      .billing-toggle,
+      .currency-row {
+        margin: 0;
+      }
+      /* Flex row for billing + currency on mobile */
+      .control-bar > .billing-toggle,
+      .control-bar > .currency-row {
+        display: none;
+      }
+    }
+
+    /* We need a wrapper for mobile toggles, let's use CSS to lay them out */
+    .mobile-controls-row {
+      display: none;
+    }
+    @media (max-width: 960px) {
+      .mobile-controls-row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        padding: 14px 18px 16px;
+        width: 100%;
+      }
+      /* Hide desktop toggles inside control-bar on mobile */
+      .control-bar > .control-divider,
+      .control-bar > .billing-toggle,
+      .control-bar > .currency-row {
+        display: none;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .pricing-header { padding: 32px 16px 0; }
+      .plans-container { padding: 0 14px 60px; }
+      .plan-card { padding: 24px 20px 22px; }
+      .plan-amount { font-size: 38px; }
+      .control-strip { padding: 0 14px; margin: 20px auto 24px; }
+      .inline-slider-group { padding: 18px 18px 14px; }
+      .mobile-controls-row {
+        padding: 12px 14px 14px;
+        gap: 8px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .pricing-header h1 { font-size: 26px; }
+      /* Bigger touch targets on small screens */
+      input[type="range"]::-webkit-slider-thumb {
+        width: 26px; height: 26px;
+        margin-top: -10.5px;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="pricing-page">
+
+  <!-- ════ HEADER ════ -->
+  <section class="pricing-header">
+    <h1>Simple, <span>transparent</span> pricing</h1>
+    <p class="subtitle">Pick your profiles. We'll recommend the right plan.</p>
+  </section>
+
+  <!-- ════ UNIFIED CONTROL BAR ════ -->
+  <section class="control-strip">
+    <div class="control-bar">
+      <!-- Slider inline -->
+      <div class="inline-slider-group">
+        <span class="slider-label-text">Profiles</span>
+        <div class="slider-track-inline">
+          <input type="range" id="profileSlider" min="1" max="50" value="5" step="1">
+        </div>
+        <div class="slider-value-inline">
+          <span class="slider-value" id="sliderValue">5</span>
+        </div>
+      </div>
+
+      <div class="control-divider"></div>
+
+      <!-- Billing -->
+      <div class="billing-toggle" id="billingToggle">
+        <div class="billing-slider" id="billingSlider"></div>
+        <button class="billing-option active" data-billing="annual">Annual<span class="billing-save">-15%</span></button>
+        <button class="billing-option" data-billing="monthly">Monthly</button>
+      </div>
+
+      <div class="control-divider"></div>
+
+      <!-- Currency -->
+      <div class="currency-row">
+        <button class="currency-btn" data-currency="usd">$</button>
+        <button class="currency-btn active" data-currency="gbp">£</button>
+        <button class="currency-btn" data-currency="eur">€</button>
+      </div>
+
+      <!-- Mobile: billing + currency in one row below slider -->
+      <div class="mobile-controls-row">
+        <div class="billing-toggle" id="billingToggleMobile">
+          <div class="billing-slider billing-slider-mobile"></div>
+          <button class="billing-option active" data-billing="annual">Annual<span class="billing-save">-15%</span></button>
+          <button class="billing-option" data-billing="monthly">Monthly</button>
+        </div>
+        <div class="currency-row">
+          <button class="currency-btn" data-currency="usd">$</button>
+          <button class="currency-btn active" data-currency="gbp">£</button>
+          <button class="currency-btn" data-currency="eur">€</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ PLANS ════ -->
+  <section class="plans-container">
+    <div class="plans-grid">
+
+      <!-- ──── BASIC — 3 features ──── -->
+      <div class="plan-card" id="planBasic" data-max-profiles="5">
+        <div class="recommended-badge">Recommended</div>
+        <div class="plan-name-row">
+          <div class="plan-name">Basic</div>
+        </div>
+        <div class="plan-tagline">For bloggers, solopreneurs and startups</div>
+
+        <div class="plan-price-block">
+          <div class="plan-price">
+            <span class="plan-currency">£</span>
+            <span class="plan-amount" data-base-monthly="19.99" data-base-annual="16.99">16.99</span>
+          </div>
+          <div class="plan-period-row">
+            <span class="plan-period">per month</span>
+            <span class="plan-billed">Billed annually</span>
+          </div>
+        </div>
+
+        <a href="#" class="plan-cta plan-cta-secondary">
+          Start free trial
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+
+        <ul class="plan-limits">
+          <li class="plan-limit-row">
+            <span class="limit-label">Users</span>
+            <span class="limit-value-static">1</span>
+          </li>
+          <li class="plan-limit-row">
+            <span class="limit-label">Workspaces</span>
+            <span class="limit-value-static">1</span>
+          </li>
+          <li class="plan-limit-row">
+            <span class="limit-label">Social Profiles</span>
+            <span class="limit-value-static plan-profiles-value">5</span>
+          </li>
+          <li class="plan-limit-row">
+            <span class="limit-label">Importer</span>
+            <span class="limit-value-static feature-locked">Basic</span>
+          </li>
+          <li class="plan-limit-row">
+            <span class="limit-label">Analytics</span>
+            <span class="limit-value-static feature-locked">Basic</span>
+          </li>
+        </ul>
+
+        <button class="customize-toggle" onclick="toggleCustomize(this)">
+          Customise limits
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M3 4.5l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="plan-configurables">
+          <ul class="plan-limits">
+            <li class="plan-limit-row">
+              <span class="limit-label">Timeslots / day</span>
+              <select class="limit-select"><option value="5">5</option><option selected>10</option><option value="20">20</option></select>
+            </li>
+            <li class="plan-limit-row">
+              <span class="limit-label">Categories</span>
+              <select class="limit-select"><option value="5">5</option><option selected>10</option><option value="20">20</option></select>
+            </li>
+            <li class="plan-limit-row">
+              <span class="limit-label">Queued Posts</span>
+              <select class="limit-select"><option>200</option><option selected>500</option><option>1,000</option></select>
+            </li>
+            <li class="plan-limit-row">
+              <span class="limit-label">RSS Importers</span>
+              <select class="limit-select"><option>2</option><option selected>5</option><option>10</option></select>
+            </li>
+          </ul>
+          <div class="addon-price">
+            <span class="addon-price-label">Add-ons total</span>
+            <span class="addon-price-value">+ £0.00/mo</span>
+          </div>
+        </div>
+
+        <hr class="plan-divider">
+        <div class="plan-features-label">What's included</div>
+        <ul class="plan-features">
+          <li class="plan-feature new-in-tier">
+            <span class="ci"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5.5l2.2 2L8 3" stroke="#1a9d5c" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Queue & schedule posts
+          </li>
+          <li class="plan-feature new-in-tier">
+            <span class="ci"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5.5l2.2 2L8 3" stroke="#1a9d5c" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Content recycling
+          </li>
+          <li class="plan-feature new-in-tier">
+            <span class="ci"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5.5l2.2 2L8 3" stroke="#1a9d5c" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Basic analytics
+          </li>
+        </ul>
+      </div>
+
+      <!-- ──── BETTER — 7 features (3 inherited + 4 new) ──── -->
+      <div class="plan-card recommended" id="planBetter" data-max-profiles="25">
+        <div class="recommended-badge">Recommended</div>
+        <div class="plan-name-row">
+          <div class="plan-name">Better</div>
+          <span class="best-value-badge">Best Value</span>
+        </div>
+        <div class="plan-tagline">Manage your organisation's social strategy</div>
+
+        <div class="plan-price-block">
+          <div class="plan-price">
+            <span class="plan-currency">£</span>
+            <span class="plan-amount" data-base-monthly="33.99" data-base-annual="28.99">28.99</span>
+          </div>
+          <div class="plan-period-row">
+            <span class="plan-period">per month</span>
+            <span class="plan-billed">Billed annually</span>
+          </div>
+        </div>
+
+        <a href="#" class="plan-cta plan-cta-primary">
+          Start free trial
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+
+        <ul class="plan-limits">
+          <li class="plan-limit-row">
+            <span class="limit-label">Users</span>
+            <span class="limit-value-static plan-users-value">3</span>
+          </li>
+          <li class="plan-limit-row">
+            <span class="limit-label">Workspaces</span>
+            <span class="limit-value-static">3</span>
+          </li>
+          <li class="plan-limit-row">
+            <span class="limit-label">Social Profiles</span>
+            <span class="limit-value-static plan-profiles-value">10</span>
+          </li>
+          <li class="plan-limit-row">
+            <span class="limit-label">Importer</span>
+            <span class="limit-value-static feature-advanced">Advanced</span>
+          </li>
+          <li class="plan-limit-row">
+            <span class="limit-label">Analytics</span>
+            <span class="limit-value-static feature-advanced">Advanced</span>
+          </li>
+        </ul>
+
+        <button class="customize-toggle" onclick="toggleCustomize(this)">
+          Customise limits
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M3 4.5l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="plan-configurables">
+          <ul class="plan-limits">
+            <li class="plan-limit-row">
+              <span class="limit-label">Users</span>
+              <select class="limit-select"><option selected>3</option><option>5</option><option>10</option></select>
+            </li>
+            <li class="plan-limit-row">
+              <span class="limit-label">Timeslots / day</span>
+              <select class="limit-select"><option>10</option><option selected>20</option><option>50</option></select>
+            </li>
+            <li class="plan-limit-row">
+              <span class="limit-label">Categories</span>
+              <select class="limit-select"><option>10</option><option selected>20</option><option>50</option></select>
+            </li>
+            <li class="plan-limit-row">
+              <span class="limit-label">Queued Posts</span>
+              <select class="limit-select"><option>500</option><option selected>1,000</option><option>2,000</option><option>5,000</option></select>
+            </li>
+            <li class="plan-limit-row">
+              <span class="limit-label">RSS Importers</span>
+              <select class="limit-select"><option>5</option><option selected>10</option><option>20</option></select>
+            </li>
+          </ul>
+          <div class="addon-price">
+            <span class="addon-price-label">Add-ons total</span>
+            <span class="addon-price-value">+ £0.00/mo</span>
+          </div>
+        </div>
+
+        <hr class="plan-divider">
+        <div class="plan-features-label">What's included</div>
+        <ul class="plan-features">
+          <li class="plan-feature inherited">
+            <span class="ci"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5.5l2.2 2L8 3" stroke="#1a9d5c" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Queue & schedule posts
+          </li>
+          <li class="plan-feature inherited">
+            <span class="ci"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5.5l2.2 2L8 3" stroke="#1a9d5c" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Content recycling
+          </li>
+          <li class="plan-feature inherited">
+            <span class="ci"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5.5l2.2 2L8 3" stroke="#1a9d5c" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Basic analytics
+          </li>
+          <li class="plan-feature new-in-tier">
+            <span class="ci"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5.5l2.2 2L8 3" stroke="#1a9d5c" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Advanced analytics & reports
+          </li>
+          <li class="plan-feature new-in-tier">
+            <span class="ci"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5.5l2.2 2L8 3" stroke="#1a9d5c" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Advanced importer (social, CSV)
+          </li>
+          <li class="plan-feature new-in-tier">
+            <span class="ci"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5.5l2.2 2L8 3" stroke="#1a9d5c" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Team collaboration
+          </li>
+          <li class="plan-feature new-in-tier">
+            <span class="ci"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5.5l2.2 2L8 3" stroke="#1a9d5c" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            AI text generation
+          </li>
+        </ul>
+      </div>
+
+      <!-- ──── BEST — 11 features (7 inherited + 4 new) ──── -->
+      <div class="plan-card" id="planBest" data-max-profiles="50">
+        <div class="recommended-badge">Recommended</div>
+        <div class="plan-name-row">
+          <div class="plan-name">Best</div>
+        </div>
+        <div class="plan-tagline">For agencies managing multiple organisations</div>
+
+        <div class="plan-price-block">
+          <div class="plan-price">
+            <span class="plan-currency">£</span>
+            <span class="plan-amount" data-base-monthly="69.99" data-base-annual="59.49">59.49</span>
+          </div>
+          <div class="plan-period-row">
+            <span class="plan-period">per month</span>
+            <span class="plan-billed">Billed annually</span>
+          </div>
+        </div>
+
+        <a href="#" class="plan-cta plan-cta-secondary">
+          Start free trial
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+
+        <ul class="plan-limits">
+          <li class="plan-limit-row">
+            <span class="limit-label">Users</span>
+            <span class="limit-value-static plan-users-value">5</span>
+          </li>
+          <li class="plan-limit-row">
+            <span class="limit-label">Workspaces</span>
+            <span class="limit-value-static">Unlimited</span>
+          </li>
+          <li class="plan-limit-row">
+            <span class="limit-label">Social Profiles</span>
+            <span class="limit-value-static plan-profiles-value">25</span>
+          </li>
+          <li class="plan-limit-row">
+            <span class="limit-label">Importer</span>
+            <span class="limit-value-static feature-advanced">Advanced</span>
+          </li>
+          <li class="plan-limit-row">
+            <span class="limit-label">Analytics</span>
+            <span class="limit-value-static feature-advanced">Advanced</span>
+          </li>
+        </ul>
+
+        <button class="customize-toggle" onclick="toggleCustomize(this)">
+          Customise limits
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M3 4.5l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="plan-configurables">
+          <ul class="plan-limits">
+            <li class="plan-limit-row">
+              <span class="limit-label">Users</span>
+              <select class="limit-select"><option selected>5</option><option>10</option><option>20</option><option>50</option></select>
+            </li>
+            <li class="plan-limit-row">
+              <span class="limit-label">Timeslots / day</span>
+              <select class="limit-select"><option>20</option><option selected>50</option><option>100</option></select>
+            </li>
+            <li class="plan-limit-row">
+              <span class="limit-label">Categories</span>
+              <select class="limit-select"><option>20</option><option selected>50</option><option>100</option></select>
+            </li>
+            <li class="plan-limit-row">
+              <span class="limit-label">Queued Posts</span>
+              <select class="limit-select"><option>1,000</option><option selected>2,000</option><option>5,000</option><option>10,000</option></select>
+            </li>
+            <li class="plan-limit-row">
+              <span class="limit-label">RSS Importers</span>
+              <select class="limit-select"><option>10</option><option selected>20</option><option>50</option></select>
+            </li>
+          </ul>
+          <div class="addon-price">
+            <span class="addon-price-label">Add-ons total</span>
+            <span class="addon-price-value">+ £0.00/mo</span>
+          </div>
+        </div>
+
+        <hr class="plan-divider">
+        <div class="plan-features-label">What's included</div>
+        <ul class="plan-features">
+          <li class="plan-feature inherited">
+            <span class="ci"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5.5l2.2 2L8 3" stroke="#1a9d5c" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Queue & schedule posts
+          </li>
+          <li class="plan-feature inherited">
+            <span class="ci"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5.5l2.2 2L8 3" stroke="#1a9d5c" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Content recycling
+          </li>
+          <li class="plan-feature inherited">
+            <span class="ci"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5.5l2.2 2L8 3" stroke="#1a9d5c" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Basic analytics
+          </li>
+          <li class="plan-feature inherited">
+            <span class="ci"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5.5l2.2 2L8 3" stroke="#1a9d5c" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Advanced analytics & reports
+          </li>
+          <li class="plan-feature inherited">
+            <span class="ci"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5.5l2.2 2L8 3" stroke="#1a9d5c" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Advanced importer (social, CSV)
+          </li>
+          <li class="plan-feature inherited">
+            <span class="ci"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5.5l2.2 2L8 3" stroke="#1a9d5c" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Team collaboration
+          </li>
+          <li class="plan-feature inherited">
+            <span class="ci"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5.5l2.2 2L8 3" stroke="#1a9d5c" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            AI text generation
+          </li>
+          <li class="plan-feature new-in-tier">
+            <span class="ci"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5.5l2.2 2L8 3" stroke="#1a9d5c" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Unlimited workspaces
+          </li>
+          <li class="plan-feature new-in-tier">
+            <span class="ci"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5.5l2.2 2L8 3" stroke="#1a9d5c" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Priority support
+          </li>
+          <li class="plan-feature new-in-tier">
+            <span class="ci"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5.5l2.2 2L8 3" stroke="#1a9d5c" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            White-label reports
+          </li>
+          <li class="plan-feature new-in-tier">
+            <span class="ci"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5.5l2.2 2L8 3" stroke="#1a9d5c" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Dedicated account manager
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+</div>
+
+<script>
+  /* Billing toggle — sliding pill (syncs desktop + mobile) */
+  const allBillingBtns = document.querySelectorAll('.billing-option');
+  const allBillingSliders = document.querySelectorAll('.billing-slider');
+
+  function updateAllBillingSliders() {
+    document.querySelectorAll('.billing-toggle').forEach(toggle => {
+      const active = toggle.querySelector('.billing-option.active');
+      const slider = toggle.querySelector('.billing-slider');
+      if (!active || !slider) return;
+      const pad = parseInt(getComputedStyle(toggle).paddingLeft) || 2;
+      slider.style.width = active.offsetWidth + 'px';
+      slider.style.transform = `translateX(${active.offsetLeft - pad}px)`;
+    });
+  }
+  requestAnimationFrame(() => requestAnimationFrame(updateAllBillingSliders));
+  window.addEventListener('resize', updateAllBillingSliders);
+
+  allBillingBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const billing = btn.dataset.billing;
+      // Sync all toggles
+      allBillingBtns.forEach(b => {
+        b.classList.toggle('active', b.dataset.billing === billing);
+      });
+      updateAllBillingSliders();
+      const isAnnual = billing === 'annual';
+      document.querySelectorAll('.plan-amount').forEach(el => {
+        el.textContent = isAnnual ? el.dataset.baseAnnual : el.dataset.baseMonthly;
+      });
+      document.querySelectorAll('.plan-billed').forEach(el => {
+        el.textContent = isAnnual ? 'Billed annually' : 'Billed monthly';
+      });
+    });
+  });
+
+  /* Currency — syncs all instances */
+  const currencySymbols = { usd: '$', gbp: '£', eur: '€' };
+  document.querySelectorAll('.currency-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const cur = btn.dataset.currency;
+      document.querySelectorAll('.currency-btn').forEach(b => {
+        b.classList.toggle('active', b.dataset.currency === cur);
+      });
+      document.querySelectorAll('.plan-currency').forEach(el => el.textContent = currencySymbols[cur]);
+    });
+  });
+
+  /* Slider */
+  const slider = document.getElementById('profileSlider');
+  const sliderValueEl = document.getElementById('sliderValue');
+  const plans = {
+    basic:  { el: document.getElementById('planBasic'),  maxProfiles: 5  },
+    better: { el: document.getElementById('planBetter'), maxProfiles: 25 },
+    best:   { el: document.getElementById('planBest'),   maxProfiles: 50 },
+  };
+
+  function updateFromSlider() {
+    const val = parseInt(slider.value);
+    sliderValueEl.textContent = val;
+    sliderValueEl.classList.add('bump');
+    setTimeout(() => sliderValueEl.classList.remove('bump'), 150);
+
+    const pct = ((val - 1) / 49) * 100;
+    slider.style.setProperty('--fill', pct + '%');
+
+    let recommended = 'basic';
+    if (val > 5) recommended = 'better';
+    if (val > 25) recommended = 'best';
+
+    Object.entries(plans).forEach(([key, plan]) => {
+      plan.el.classList.remove('recommended', 'too-small');
+      if (key === recommended) plan.el.classList.add('recommended');
+      else if (plan.maxProfiles < val) plan.el.classList.add('too-small');
+    });
+
+    // ── Coupled values: profiles → users, categories, workspaces ──
+    // Boss: "if you pick 10 profiles, it automatically picks 3 users, 20 categories"
+    const couplingTable = [
+      { maxP: 1,  profiles: 1,  users: 1,  categories: 5,   workspaces: 1 },
+      { maxP: 3,  profiles: 3,  users: 1,  categories: 5,   workspaces: 1 },
+      { maxP: 5,  profiles: 5,  users: 1,  categories: 10,  workspaces: 1 },
+      { maxP: 10, profiles: 10, users: 3,  categories: 20,  workspaces: 3 },
+      { maxP: 15, profiles: 15, users: 3,  categories: 20,  workspaces: 3 },
+      { maxP: 25, profiles: 25, users: 5,  categories: 50,  workspaces: 5 },
+      { maxP: 50, profiles: 50, users: 10, categories: 100, workspaces: 'Unlimited' },
+    ];
+    function getCoupling(v) {
+      for (let i = couplingTable.length - 1; i >= 0; i--) {
+        if (v >= couplingTable[i].maxP) return couplingTable[i];
+      }
+      return couplingTable[0];
+    }
+    const c = getCoupling(val);
+
+    // Update profile values per plan (each plan shows its own tier's profiles)
+    const basicProfiles = Math.min(val, 5);
+    const betterProfiles = Math.min(val, 25);
+    const bestProfiles = Math.min(val, 50);
+    const basicCard = document.getElementById('planBasic');
+    const betterCard = document.getElementById('planBetter');
+    const bestCard = document.getElementById('planBest');
+
+    // Helper: update static values in a card
+    function setCardValues(card, profiles, users, workspaces, categories) {
+      const pv = card.querySelector('.plan-profiles-value');
+      if (pv) pv.textContent = profiles;
+      const uv = card.querySelector('.plan-users-value');
+      if (uv) uv.textContent = users;
+    }
+
+    // Basic: always 1 user, 1 workspace
+    setCardValues(basicCard, Math.max(val, 1) <= 5 ? Math.max(val, 1) : 5, 1, 1, 10);
+
+    // Better: coupled
+    if (val <= 5) {
+      setCardValues(betterCard, 10, 3, 3, 20);
+    } else if (val <= 25) {
+      const bc = getCoupling(val);
+      setCardValues(betterCard, val, bc.users, bc.workspaces, bc.categories);
+    } else {
+      setCardValues(betterCard, 25, 5, 5, 50);
+    }
+
+    // Best: coupled
+    if (val <= 25) {
+      setCardValues(bestCard, 25, 5, 'Unlimited', 50);
+    } else {
+      const bc = getCoupling(val);
+      setCardValues(bestCard, val, bc.users, bc.workspaces, bc.categories);
+    }
+
+    document.querySelectorAll('.slider-ticks span').forEach(tick => {
+      const tv = parseInt(tick.textContent);
+      tick.classList.toggle('tick-active', tv === val || (
+        tv <= val && tick.nextElementSibling && parseInt(tick.nextElementSibling.textContent) > val
+      ));
+    });
+  }
+
+  slider.addEventListener('input', updateFromSlider);
+  updateFromSlider();
+
+  /* Customise */
+  function toggleCustomize(btn) {
+    btn.classList.toggle('open');
+    btn.nextElementSibling.classList.toggle('visible');
+  }
+
+  /* ══════════════════════════════════════
+     ADD-ON PRICING — updates main price
+     ══════════════════════════════════════ */
+  const PRICE_PER_STEP = 3; // £3/mo per upgrade step
+
+  function recalcAddons(card) {
+    const panel = card.querySelector('.plan-configurables');
+    if (!panel) return;
+
+    let addonTotal = 0;
+    panel.querySelectorAll('.limit-select').forEach(sel => {
+      const defaultIdx = [...sel.options].findIndex(o => o.defaultSelected);
+      const stepsAbove = Math.max(0, sel.selectedIndex - defaultIdx);
+      addonTotal += stepsAbove * PRICE_PER_STEP;
+    });
+
+    // Update add-on line
+    const sym = document.querySelector('.plan-currency')?.textContent || '£';
+    const addonEl = panel.querySelector('.addon-price-value');
+    if (addonEl) {
+      addonEl.textContent = addonTotal > 0
+        ? `+ ${sym}${addonTotal.toFixed(2)}/mo`
+        : `+ ${sym}0.00/mo`;
+    }
+
+    // Update main displayed price = base + addons
+    const amountEl = card.querySelector('.plan-amount');
+    if (amountEl) {
+      const isAnnual = document.querySelector('.billing-option.active')?.dataset.billing === 'annual';
+      const base = parseFloat(isAnnual ? amountEl.dataset.baseAnnual : amountEl.dataset.baseMonthly);
+      const total = base + addonTotal;
+      amountEl.textContent = total % 1 === 0 ? total.toFixed(0) : total.toFixed(2);
+      // Store addon so billing toggle can recalc
+      card.dataset.addonTotal = addonTotal;
+    }
+  }
+
+  // Attach listeners
+  document.querySelectorAll('.plan-card').forEach(card => {
+    card.dataset.addonTotal = 0;
+    card.querySelectorAll('.limit-select').forEach(sel => {
+      sel.addEventListener('change', () => recalcAddons(card));
+    });
+  });
+
+  // Patch billing toggle to include addons when switching
+  const origBillingHandler = true; // flag that addon-aware billing is active
+  allBillingBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      // After billing updates base prices, re-add addons
+      setTimeout(() => {
+        document.querySelectorAll('.plan-card').forEach(card => {
+          const addon = parseFloat(card.dataset.addonTotal) || 0;
+          if (addon > 0) {
+            const amountEl = card.querySelector('.plan-amount');
+            const isAnnual = document.querySelector('.billing-option.active')?.dataset.billing === 'annual';
+            const base = parseFloat(isAnnual ? amountEl.dataset.baseAnnual : amountEl.dataset.baseMonthly);
+            const total = base + addon;
+            amountEl.textContent = total % 1 === 0 ? total.toFixed(0) : total.toFixed(2);
+          }
+        });
+      }, 10);
+    });
+  });
+</script>
+</body>
+</html>
